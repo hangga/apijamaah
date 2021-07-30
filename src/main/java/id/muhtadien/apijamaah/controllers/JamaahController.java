@@ -47,6 +47,6 @@ public class JamaahController {
     @PostMapping(value = "addbody")
     public CommonResponse<JamaahEntity> add(@RequestBody JamaahEntity jamaahEntity) {
         jamaahRepository.save(jamaahEntity);
-        return commonResponseGenerator.successResponse(jamaahEntity, Prop.SUCCEEDED);;
+        return commonResponseGenerator.successResponse(jamaahEntity, Prop.SUCCEEDED);
     }
 }
