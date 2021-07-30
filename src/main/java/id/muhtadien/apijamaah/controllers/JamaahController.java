@@ -1,7 +1,7 @@
 package id.muhtadien.apijamaah.controllers;
 
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
-import id.muhtadien.apijamaah.models.repositories.JamaahRepository;
+import id.muhtadien.apijamaah.models.services.JamaahService;
 import id.muhtadien.apijamaah.responses.CommonResponse;
 import id.muhtadien.apijamaah.responses.CommonResponseGenerator;
 import id.muhtadien.apijamaah.utils.Prop;
@@ -15,19 +15,31 @@ import java.util.List;
 public class JamaahController {
 
     @Autowired
-    JamaahRepository jamaahRepository;
+    CommonResponseGenerator commonResponseGenerator;
+
 
     @Autowired
-    CommonResponseGenerator commonResponseGenerator;
+    JamaahService jamaahService;
+
 
     @GetMapping("")
     public CommonResponse<List<JamaahEntity>> index() {
-        return commonResponseGenerator.successResponse(jamaahRepository.findAll(), Prop.SUCCEEDED);
+        List<JamaahEntity> jamaahEntities = jamaahService.getAll();
+        try{
+            return commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED);
+        }catch (Exception e){
+            return commonResponseGenerator.failedResponse(e.getMessage(), 500);
+        }
     }
 
     @GetMapping(value = "search")
     public CommonResponse<List<JamaahEntity>> search(@RequestParam String nama) {
-        return commonResponseGenerator.successResponse(jamaahRepository.searchByName(nama), Prop.SUCCEEDED);
+        List<JamaahEntity> jamaahEntities = jamaahService.searchByName(nama);
+        try{
+            return commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED);
+        }catch (Exception e){
+            return commonResponseGenerator.failedResponse(e.getMessage(), 500);
+        }
     }
 
     @PostMapping(value = "add")
@@ -35,18 +47,12 @@ public class JamaahController {
                             @RequestParam String alamat,
                             @RequestParam String skill,
                             @RequestParam String status) {
-        JamaahEntity jamaahEntity = new JamaahEntity();
-        jamaahEntity.setAlamat(alamat);
-        jamaahEntity.setNama(nama);
-        jamaahEntity.setSkill(skill);
-        jamaahEntity.setStatus(status);
-        jamaahRepository.save(jamaahEntity);
-        return commonResponseGenerator.successResponse(jamaahEntity, Prop.SUCCEEDED);
+        JamaahEntity jamaah = jamaahService.add(nama, alamat, skill, status);
+        try{
+            return commonResponseGenerator.successResponse(jamaah, Prop.SUCCEEDED);
+        }catch (Exception e){
+            return commonResponseGenerator.failedResponse(e.getMessage(), 500);
+        }
     }
 
-    @PostMapping(value = "addbody")
-    public CommonResponse<JamaahEntity> add(@RequestBody JamaahEntity jamaahEntity) {
-        jamaahRepository.save(jamaahEntity);
-        return commonResponseGenerator.successResponse(jamaahEntity, Prop.SUCCEEDED);
-    }
 }

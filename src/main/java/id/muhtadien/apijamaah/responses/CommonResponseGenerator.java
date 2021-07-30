@@ -12,4 +12,12 @@ public class CommonResponseGenerator<T> {
         commonResponse.setStatus(200);
         return commonResponse;
     }
+
+    public <T> CommonResponse<T> failedResponse(String message, int status){
+        CommonResponse commonResponse = new CommonResponse<>();
+        commonResponse.setData(null);
+        commonResponse.setMessage(message);
+        commonResponse.setStatus(status);
+        return commonResponse;
+    }
 }
