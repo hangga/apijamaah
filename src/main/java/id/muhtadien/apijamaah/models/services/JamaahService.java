@@ -12,6 +12,12 @@ public interface JamaahService {
                      @RequestParam String skill,
                      @RequestParam String status);
 
+    JamaahEntity update(@RequestParam int id,
+                        @RequestParam String nama,
+                        @RequestParam String alamat,
+                        @RequestParam String skill,
+                        @RequestParam String status);
+
     List<JamaahEntity> getAll();
 
     List<JamaahEntity> searchByName(@RequestParam String nama);

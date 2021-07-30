@@ -23,7 +23,7 @@ public class JamaahController {
 
 
     @GetMapping("")
-    public CommonResponse<List<JamaahEntity>> index() {
+    public CommonResponse index() {
         List<JamaahEntity> jamaahEntities = jamaahService.getAll();
         try{
             return commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED);
@@ -33,7 +33,7 @@ public class JamaahController {
     }
 
     @GetMapping(value = "search")
-    public CommonResponse<List<JamaahEntity>> search(@RequestParam String nama) {
+    public CommonResponse search(@RequestParam String nama) {
         List<JamaahEntity> jamaahEntities = jamaahService.searchByName(nama);
         try{
             return commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED);
@@ -43,11 +43,25 @@ public class JamaahController {
     }
 
     @PostMapping(value = "add")
-    public CommonResponse<JamaahEntity> add(@RequestParam String nama,
-                            @RequestParam String alamat,
-                            @RequestParam String skill,
-                            @RequestParam String status) {
+    public CommonResponse add(@RequestParam String nama,
+                              @RequestParam String alamat,
+                              @RequestParam String skill,
+                              @RequestParam String status) {
         JamaahEntity jamaah = jamaahService.add(nama, alamat, skill, status);
+        try{
+            return commonResponseGenerator.successResponse(jamaah, Prop.SUCCEEDED);
+        }catch (Exception e){
+            return commonResponseGenerator.failedResponse(e.getMessage(), 500);
+        }
+    }
+
+    @PostMapping(value = "update")
+    public CommonResponse update(@RequestParam int id,
+                                               @RequestParam String nama,
+                                            @RequestParam String alamat,
+                                            @RequestParam String skill,
+                                            @RequestParam String status){
+        JamaahEntity jamaah = jamaahService.update(id, nama, alamat, skill, status);
         try{
             return commonResponseGenerator.successResponse(jamaah, Prop.SUCCEEDED);
         }catch (Exception e){
