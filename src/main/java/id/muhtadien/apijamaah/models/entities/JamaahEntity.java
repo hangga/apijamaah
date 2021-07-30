@@ -1,10 +1,10 @@
-package id.muhtadien.apijamaah.models;
+package id.muhtadien.apijamaah.models.entities;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "jamaah")
-public class Jamaah {
+public class JamaahEntity {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,7 +52,7 @@ public class Jamaah {
 
     @Override
     public String toString() {
-        return "Jamaah{" +
+        return "JamaahEntity{" +
                 "id=" + id +
                 ", nama='" + nama + '\'' +
                 ", alamat='" + alamat + '\'' +
