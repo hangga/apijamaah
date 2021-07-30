@@ -19,7 +19,12 @@ public class JamaahController {
         return jamaahRepository.findAll();
     }
 
-    @PostMapping("add")
+    @GetMapping(value = "search")
+    public List<JamaahEntity> search(@RequestParam String nama){
+        return jamaahRepository.searchByName(nama);
+    }
+
+    @PostMapping(value = "add")
     public JamaahEntity add(@RequestParam String nama,
                             @RequestParam String alamat,
                             @RequestParam String skill,
@@ -33,7 +38,7 @@ public class JamaahController {
         return jamaahEntity;
     }
 
-    @PostMapping("add")
+    @PostMapping(value = "addbody")
     public JamaahEntity add(@RequestBody JamaahEntity jamaahEntity){
         jamaahRepository.save(jamaahEntity);
         return jamaahEntity;
