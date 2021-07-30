@@ -3,6 +3,7 @@ package id.muhtadien.apijamaah.models.services;
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
 import id.muhtadien.apijamaah.models.repositories.JamaahRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,17 +28,18 @@ public class JamaahServiceImp implements JamaahService{
     @Override
     public JamaahEntity update(int id, String nama, String alamat, String skill, String status) {
         JamaahEntity jamaah = new JamaahEntity();
+        jamaah.setId(id);
         jamaah.setAlamat(alamat);
         jamaah.setNama(nama);
         jamaah.setSkill(skill);
         jamaah.setStatus(status);
-        jamaahRepository.update(nama, alamat, skill, status, id);
+        jamaahRepository.save(jamaah);
         return jamaah;
     }
 
     @Override
     public List<JamaahEntity> getAll() {
-        return jamaahRepository.findAll();
+        return jamaahRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @Override

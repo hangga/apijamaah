@@ -6,6 +6,8 @@ import id.muhtadien.apijamaah.responses.CommonResponse;
 import id.muhtadien.apijamaah.responses.CommonResponseGenerator;
 import id.muhtadien.apijamaah.utils.Prop;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +38,10 @@ public class JamaahController {
     public CommonResponse search(@RequestParam String nama) {
         List<JamaahEntity> jamaahEntities = jamaahService.searchByName(nama);
         try{
-            return commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED);
+            if (jamaahEntities.size() == 0){
+                return notFound();
+            } else
+                return commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED);
         }catch (Exception e){
             return commonResponseGenerator.failedResponse(e.getMessage(), 500);
         }
@@ -67,6 +72,12 @@ public class JamaahController {
         }catch (Exception e){
             return commonResponseGenerator.failedResponse(e.getMessage(), 500);
         }
+    }
+    //@GetMapping("/methodlevel")
+    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Resource was not found on the server")
+    public CommonResponse notFound() {
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND);
+        return commonResponseGenerator.emptyResponse("Not found");
     }
 
 }
