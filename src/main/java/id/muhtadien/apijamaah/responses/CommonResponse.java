@@ -5,6 +5,12 @@ public class CommonResponse<T> {
     private String message;
     private T data;
 
+    public CommonResponse(String message, int status, T data) {
+        this.message = message;
+        this.status = status;
+        this.data = data;
+    }
+
     public CommonResponse() {
     }
 

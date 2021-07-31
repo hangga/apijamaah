@@ -9,14 +9,15 @@ public class JamaahEntity {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "nama", nullable = false)
+    //@Column(name = "nama", nullable = false)
     private String nama;
-    @Column(name = "alamat", nullable = false)
+    //@Column(name = "alamat", nullable = false)
     private String alamat;
-    @Column(name = "status", nullable = false)
+    //@Column(name = "status", nullable = false)
     private String status;
-    @Column(name = "skill", nullable = false)
+    //@Column(name = "skill", nullable = false)
     private String skill;
+
 
     public String getNama() {
         return nama;
