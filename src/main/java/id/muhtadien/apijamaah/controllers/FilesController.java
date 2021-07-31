@@ -1,6 +1,8 @@
 package id.muhtadien.apijamaah.controllers;
 
+import id.muhtadien.apijamaah.models.ExcelHelper;
 import id.muhtadien.apijamaah.models.FileInfo;
+import id.muhtadien.apijamaah.models.services.ExcelService;
 import id.muhtadien.apijamaah.models.services.FilesStorageService;
 import id.muhtadien.apijamaah.responses.CommonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,17 +27,40 @@ public class FilesController {
     @Autowired
     FilesStorageService storageService;
 
+    @Autowired
+    ExcelService excelService;
+
     @PostMapping(value = "upload")
     public ResponseEntity<CommonResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message;
-        try {
+        String message = "";
+
+        //just upload
+        /*try {
             storageService.save(file);
+
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new CommonResponse(message, 200, null));
         } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!\n"+ e.getMessage();
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new CommonResponse(message, 417, null));
+        }*/
+
+        // Upload and import Excel
+        if (ExcelHelper.hasExcelFormat(file)) {
+            //try {
+            try {
+                excelService.save(file);
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(new CommonResponse(message, 200, null));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new CommonResponse(e.getMessage(), 500, null));
+            }
         }
+
+        message = "Please upload an excel file!";
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CommonResponse(message, 400, null));
+
     }
 
     @GetMapping(value = "files")

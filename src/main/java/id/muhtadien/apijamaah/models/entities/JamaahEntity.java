@@ -9,15 +9,24 @@ public class JamaahEntity {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    //@Column(name = "nama", nullable = false)
+    @Column(name = "nama", nullable = true)
     private String nama;
-    //@Column(name = "alamat", nullable = false)
+    @Column(name = "alamat", nullable = true)
     private String alamat;
-    //@Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = true)
     private String status;
-    //@Column(name = "skill", nullable = false)
+    @Column(name = "skill", nullable = true)
     private String skill;
+    @Column(name = "sex", nullable = true)
+    private String sex;
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public String getNama() {
         return nama;
