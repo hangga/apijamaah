@@ -15,17 +15,12 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ExcelHelper {
-    public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    public static final String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     //static String[] HEADERs = { "Id", "Title", "Description", "Published" };
-    static String SHEET = "Sheet1";
+    static final String SHEET = "Sheet1"; // <-- Sheet Name
 
-    public static boolean hasExcelFormat(MultipartFile file) {
-
-        if (!TYPE.equals(file.getContentType())) {
-            return false;
-        }
-
-        return true;
+    public static boolean isExcelFormat(MultipartFile file) {
+        return TYPE.equals(file.getContentType());
     }
 
     public static List<JamaahEntity> excelToJamaahEntitys(InputStream is) {
@@ -49,12 +44,12 @@ public class ExcelHelper {
 
                 Iterator<Cell> cellsInRow = currentRow.iterator();
 
+                // Entitas/ tabel
                 JamaahEntity jamaahEntity = new JamaahEntity();
 
                 int cellIdx = 0;
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = cellsInRow.next();
-                    //System.out.println(currentCell.getStringCellValue());
                     switch (cellIdx) {
                         case 0:
                             jamaahEntity.setNama(currentCell.getStringCellValue() == null? "-":currentCell.getStringCellValue());
