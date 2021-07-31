@@ -16,12 +16,8 @@ public class ExcelService {
     JamaahRepository repository;
 
     public void save(MultipartFile file) throws IOException {
-        List<JamaahEntity> tutorials = ExcelHelper.excelToJamaahEntitys(file.getInputStream());
-        repository.saveAll(tutorials);
-    }
-
-    public List<JamaahEntity> getAllTutorials() {
-        return repository.findAll();
+        List<JamaahEntity> jamaahEntities = ExcelHelper.excelToJamaahEntitys(file.getInputStream());
+        repository.saveAll(jamaahEntities);
     }
 
 }

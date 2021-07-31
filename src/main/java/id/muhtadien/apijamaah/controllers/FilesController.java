@@ -32,18 +32,7 @@ public class FilesController {
 
     @PostMapping(value = "upload")
     public ResponseEntity<CommonResponse> uploadFile(@RequestParam("file") MultipartFile file) {
-        String message = "";
-
-        //just upload
-        /*try {
-            storageService.save(file);
-
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new CommonResponse(message, 200, null));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new CommonResponse(message, 417, null));
-        }*/
+        String message;
 
         // Upload and import Excel
         if (ExcelHelper.hasExcelFormat(file)) {
@@ -51,16 +40,41 @@ public class FilesController {
             try {
                 excelService.save(file);
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new CommonResponse(message, 200, null));
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(new CommonResponse(message, 200, null));
             } catch (IOException e) {
                 e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new CommonResponse(e.getMessage(), 500, null));
+                return ResponseEntity
+                        .status(HttpStatus.EXPECTATION_FAILED)
+                        .body(new CommonResponse(e.getMessage(), 500, null));
             }
         }
 
         message = "Please upload an excel file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CommonResponse(message, 400, null));
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new CommonResponse(message, 400, null));
 
+    }
+
+
+    @PostMapping(value = "uploadonly")
+    public ResponseEntity<CommonResponse> justUploadFile(@RequestParam("file") MultipartFile file) {
+        String message;
+        try {
+            storageService.save(file);
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new CommonResponse(message, 200, null));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new CommonResponse(message, 417, null));
+        }
     }
 
     @GetMapping(value = "files")
@@ -73,7 +87,9 @@ public class FilesController {
             return new FileInfo(filename, url);
         }).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(fileInfos);
     }
 
     @GetMapping("/files/{filename:.+}")
