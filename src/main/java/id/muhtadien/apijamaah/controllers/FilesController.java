@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin("http://localhost:8080")
 public class FilesController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class FilesController {
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new CommonResponse(message, 200, null));
         } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!\n"+ e.getMessage();
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new CommonResponse(message, 417, null));
         }
     }
