@@ -5,14 +5,11 @@ import id.muhtadien.apijamaah.models.services.JamaahService;
 import id.muhtadien.apijamaah.responses.CommonResponse;
 import id.muhtadien.apijamaah.responses.CommonResponseGenerator;
 import id.muhtadien.apijamaah.utils.Prop;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.FileOutputStream;
 import java.util.List;
 
 @RestController
@@ -95,29 +92,4 @@ public class JamaahController {
         }
     }
 
-    //@GetMapping("/methodlevel")
-    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Resource was not found on the server")
-    public CommonResponse notFound() {
-        //return ResponseEntity.status(HttpStatus.NOT_FOUND);
-        return commonResponseGenerator.emptyResponse("Not found");
-    }
-
-    @RequestMapping(value="/uploadImage2",method = RequestMethod.POST)
-    public @ResponseBody String uploadImage2(@RequestParam("imageValue") String imageValue, HttpServletRequest request){
-        try
-        {
-            //This will decode the String which is encoded by using Base64 class
-            byte[] imageByte = Base64.decodeBase64(imageValue);
-
-            String directory= request.getRealPath("/")+"images/sample.jpg";
-
-            new FileOutputStream(directory).write(imageByte);
-            return "success ";
-        }
-        catch(Exception e)
-        {
-            return "error = "+e;
-        }
-
-    }
 }
