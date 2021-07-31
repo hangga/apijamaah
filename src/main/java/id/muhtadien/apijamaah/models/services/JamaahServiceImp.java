@@ -1,11 +1,14 @@
 package id.muhtadien.apijamaah.models.services;
 
+import id.muhtadien.apijamaah.models.ExcelHelper;
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
 import id.muhtadien.apijamaah.models.repositories.JamaahRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -45,5 +48,11 @@ public class JamaahServiceImp implements JamaahService{
     @Override
     public List<JamaahEntity> searchByName(String nama) {
         return jamaahRepository.searchByName(nama);
+    }
+
+    @Override
+    public void importExcel(MultipartFile file) throws IOException {
+        List<JamaahEntity> jamaahEntities = ExcelHelper.excelToJamaahEntitys(file.getInputStream());
+        jamaahRepository.saveAll(jamaahEntities);
     }
 }
