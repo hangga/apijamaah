@@ -28,13 +28,19 @@ public class JamaahController {
     public ResponseEntity<CommonResponse> index() {
         List<JamaahEntity> jamaahEntities = jamaahService.getAll();
         try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED));
+            if (jamaahEntities.size() == 0) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(commonResponseGenerator.emptyResponse("Not found"));
+            } else
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED));
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(commonResponseGenerator.failedResponse(e.getMessage(), 500));
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(commonResponseGenerator.failedResponse(e.getMessage(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -52,8 +58,9 @@ public class JamaahController {
                         .body(commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED));
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(commonResponseGenerator.failedResponse(e.getMessage(), 500));
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(commonResponseGenerator.failedResponse(e.getMessage(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -69,8 +76,9 @@ public class JamaahController {
                     .body(commonResponseGenerator.successResponse(jamaah, Prop.SUCCEEDED));
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(commonResponseGenerator.failedResponse(e.getMessage(), 500));
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(commonResponseGenerator.failedResponse(e.getMessage(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
@@ -87,8 +95,9 @@ public class JamaahController {
                     .body(commonResponseGenerator.successResponse(jamaah, Prop.SUCCEEDED));
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(commonResponseGenerator.failedResponse(e.getMessage(), 500));
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(commonResponseGenerator.failedResponse(e.getMessage(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
     }
 
