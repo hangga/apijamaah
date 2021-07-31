@@ -6,7 +6,7 @@
 [![Spring Boot: 2.5.3](https://img.shields.io/badge/Gradle-7.1.1-brightgreen.svg)](https://gradle.org/)
 [![Spring Boot: 2.5.3](https://img.shields.io/badge/Apache.POI-5.0.0-brightgreen.svg)](https://poi.apache.org/)   
 <br/>
-API Data Jamaah Masjid Muhtadien using Spring Framework & MySql Db
+REST - API Data Jamaah Masjid Muhtadien using Spring Framework & MySql Db
 ### Features
 - Create/ Add
 - Update
