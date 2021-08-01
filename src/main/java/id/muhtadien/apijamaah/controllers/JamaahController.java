@@ -105,7 +105,7 @@ public class JamaahController {
         }
     }
 
-    @PostMapping(value = "update")
+    @PutMapping(value = "update")
     public ResponseEntity<CommonResponse> update(@RequestParam int id,
                                  @RequestParam String nama,
                                  @RequestParam String alamat,
