@@ -3,6 +3,9 @@ package id.muhtadien.apijamaah.responses;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+/**
+ * Wajib pake anotasi @Component, agar bisa dipanggil dengan @Autowired
+ */
 @Component
 public class CommonResponseGenerator {
 

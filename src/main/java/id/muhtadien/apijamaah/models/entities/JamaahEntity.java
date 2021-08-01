@@ -20,6 +20,26 @@ public class JamaahEntity {
     //@Column(name = "sex", nullable = true)
     private String sex;
 
+    private String photoUrl;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    private boolean aktif;
+
+    public boolean isAktif() {
+        return aktif;
+    }
+
+    public void setAktif(boolean aktif) {
+        this.aktif = aktif;
+    }
+
     public String getSex() {
         return sex;
     }

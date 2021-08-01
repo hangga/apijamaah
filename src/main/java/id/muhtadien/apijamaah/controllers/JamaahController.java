@@ -19,7 +19,6 @@ public class JamaahController {
     @Autowired
     CommonResponseGenerator commonResponseGenerator;
 
-
     @Autowired
     JamaahService jamaahService;
 
