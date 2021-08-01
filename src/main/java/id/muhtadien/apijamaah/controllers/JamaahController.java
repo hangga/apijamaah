@@ -23,8 +23,9 @@ public class JamaahController {
     JamaahService jamaahService;
 
     @GetMapping(value = "getdata")
-    public ResponseEntity<CommonResponse> getall(@RequestParam(defaultValue = "0") int pageNo,
-                                                 @RequestParam(defaultValue = "10") int pageSize){
+    public ResponseEntity<CommonResponse> getall(
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize){
         List<JamaahEntity> jamaahEntities = jamaahService.getAll(pageNo, pageSize);
         try {
             if (jamaahEntities.size() == 0) {
@@ -34,7 +35,10 @@ public class JamaahController {
             } else
                 return ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(commonResponseGenerator.successResponse(jamaahEntities, Prop.SUCCEEDED));
+                        .body(commonResponseGenerator.successResponse(
+                                jamaahEntities,
+                                Prop.SUCCEEDED,
+                                pageNo));
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
