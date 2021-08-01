@@ -19,10 +19,33 @@ public class JamaahController {
     @Autowired
     CommonResponseGenerator commonResponseGenerator;
 
-
     @Autowired
     JamaahService jamaahService;
 
+    @GetMapping(value = "getdata")
+    public ResponseEntity<CommonResponse> getall(
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize){
+        List<JamaahEntity> jamaahEntities = jamaahService.getAll(pageNo, pageSize);
+        try {
+            if (jamaahEntities.size() == 0) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(commonResponseGenerator.emptyResponse("Not found"));
+            } else
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(commonResponseGenerator.successResponse(
+                                jamaahEntities,
+                                Prop.SUCCEEDED,
+                                pageNo));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(commonResponseGenerator.failedResponse(e.getMessage(),
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        }
+    }
 
     @GetMapping("")
     public ResponseEntity<CommonResponse> index() {

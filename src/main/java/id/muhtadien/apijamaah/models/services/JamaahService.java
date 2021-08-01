@@ -22,6 +22,9 @@ public interface JamaahService {
 
     List<JamaahEntity> getAll();
 
+    List<JamaahEntity> getAll(@RequestParam(defaultValue = "0") int pageNo,
+                              @RequestParam(defaultValue = "10") int pageSize);
+
     List<JamaahEntity> searchByName(@RequestParam String nama);
 
     void importExcel(MultipartFile file) throws IOException;
