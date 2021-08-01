@@ -4,11 +4,15 @@ import id.muhtadien.apijamaah.models.ExcelHelper;
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
 import id.muhtadien.apijamaah.models.repositories.JamaahRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +47,17 @@ public class JamaahServiceImp implements JamaahService{
     @Override
     public List<JamaahEntity> getAll() {
         return jamaahRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+    }
+
+    @Override
+    public List<JamaahEntity> getAll(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("id").descending());
+        Page<JamaahEntity> pagedResult = jamaahRepository.findAll(paging);
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package id.muhtadien.apijamaah.responses;
 public class CommonResponse<T> {
     private int status;
     private String message;
+    private int page;
     private T data;
 
     public CommonResponse(String message, int status, T data) {
@@ -12,6 +13,14 @@ public class CommonResponse<T> {
     }
 
     public CommonResponse() {
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 
     public int getStatus() {
