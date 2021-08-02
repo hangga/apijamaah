@@ -28,15 +28,19 @@ public class FilesStorageServiceImpl implements FilesStorageService {
 
     @Override
     public String save(MultipartFile file, String fileName) {
+        if (!isImage(file)) return "Invalid Image!";
         try {
             String prefix = String.valueOf(System.currentTimeMillis());
 
-            Path destination = this
-                    .root
-                    .resolve((prefix+"_"+fileName+"_"+file.getOriginalFilename())
-                    .replace(" ","_"));
+            String newFileName = (prefix+"_"+fileName+"_"+file.getOriginalFilename())
+                    .replace(" ","")
+                    .replace("-","")
+                    .replace("—", "");
+
+            Path destination = this.root.resolve(newFileName);
+
             Files.copy(file.getInputStream(), destination);
-            return destination.getFileName().toString();
+            return newFileName;
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -70,5 +74,14 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }
+    }
+
+    boolean isImage(MultipartFile file){
+        return file.getOriginalFilename().contains(".png") ||
+                file.getOriginalFilename().contains(".PNG") ||
+                file.getOriginalFilename().contains(".jpg") ||
+                file.getOriginalFilename().contains(".JPG") ||
+                file.getOriginalFilename().contains(".jpeg") ||
+                file.getOriginalFilename().contains(".JPEG");
     }
 }
