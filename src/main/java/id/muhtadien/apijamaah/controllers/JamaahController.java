@@ -1,6 +1,7 @@
 package id.muhtadien.apijamaah.controllers;
 
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
+import id.muhtadien.apijamaah.models.services.FilesStorageService;
 import id.muhtadien.apijamaah.models.services.JamaahService;
 import id.muhtadien.apijamaah.responses.CommonResponse;
 import id.muhtadien.apijamaah.responses.CommonResponseGenerator;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class JamaahController {
 
     @Autowired
     CommonResponseGenerator commonResponseGenerator;
+
+    @Autowired
+    FilesStorageService storageService;
 
     @Autowired
     JamaahService jamaahService;
@@ -89,10 +94,12 @@ public class JamaahController {
 
     @PostMapping(value = "add")
     public ResponseEntity<CommonResponse> add(@RequestParam String nama,
-                              @RequestParam String alamat,
-                              @RequestParam String skill,
-                              @RequestParam String status) {
-        JamaahEntity jamaah = jamaahService.add(nama, alamat, skill, status);
+                                              @RequestParam String alamat,
+                                              @RequestParam String skill,
+                                              @RequestParam String status,
+                                              @RequestParam("file") MultipartFile file) {
+        String photoUrl = storageService.save(file, nama);
+        JamaahEntity jamaah = jamaahService.add(nama, alamat, skill, status, photoUrl);
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -107,11 +114,13 @@ public class JamaahController {
 
     @PutMapping(value = "update")
     public ResponseEntity<CommonResponse> update(@RequestParam int id,
-                                 @RequestParam String nama,
-                                 @RequestParam String alamat,
-                                 @RequestParam String skill,
-                                 @RequestParam String status) {
-        JamaahEntity jamaah = jamaahService.update(id, nama, alamat, skill, status);
+                                                 @RequestParam String nama,
+                                                 @RequestParam String alamat,
+                                                 @RequestParam String skill,
+                                                 @RequestParam String status,
+                                                 @RequestParam("file") MultipartFile file) {
+        String photoUrl = storageService.save(file, nama);
+        JamaahEntity jamaah = jamaahService.update(id, nama, alamat, skill, status, photoUrl);
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)

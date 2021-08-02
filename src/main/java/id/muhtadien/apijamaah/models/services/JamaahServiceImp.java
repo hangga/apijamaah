@@ -22,24 +22,26 @@ public class JamaahServiceImp implements JamaahService{
     JamaahRepository jamaahRepository;
 
     @Override
-    public JamaahEntity add(String nama, String alamat, String skill, String status) {
+    public JamaahEntity add(String nama, String alamat, String skill, String status, String photoUrl) {
         JamaahEntity jamaahEntity = new JamaahEntity();
         jamaahEntity.setAlamat(alamat);
         jamaahEntity.setNama(nama);
         jamaahEntity.setSkill(skill);
         jamaahEntity.setStatus(status);
+        jamaahEntity.setPhotoUrl(photoUrl);
         jamaahRepository.save(jamaahEntity);
         return jamaahEntity;
     }
 
     @Override
-    public JamaahEntity update(int id, String nama, String alamat, String skill, String status) {
+    public JamaahEntity update(int id, String nama, String alamat, String skill, String status, String photoUrl) {
         JamaahEntity jamaah = new JamaahEntity();
         jamaah.setId(id);
         jamaah.setAlamat(alamat);
         jamaah.setNama(nama);
         jamaah.setSkill(skill);
         jamaah.setStatus(status);
+        jamaah.setPhotoUrl(photoUrl);
         jamaahRepository.save(jamaah);
         return jamaah;
     }

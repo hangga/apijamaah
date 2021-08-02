@@ -61,7 +61,7 @@ public class FilesController {
     public ResponseEntity<CommonResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         String message;
         try {
-            storageService.save(file);
+            storageService.save(file, "file baru");
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity
                     .status(HttpStatus.OK)

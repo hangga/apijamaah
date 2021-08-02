@@ -27,11 +27,16 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public String save(MultipartFile file, String fileName) {
         try {
             String prefix = String.valueOf(System.currentTimeMillis());
-            Files.copy(file.getInputStream(),
-                    this.root.resolve(prefix+"-"+file.getOriginalFilename()));
+
+            Path destination = this
+                    .root
+                    .resolve((prefix+"_"+fileName+"_"+file.getOriginalFilename())
+                    .replace(" ","_"));
+            Files.copy(file.getInputStream(), destination);
+            return destination.getFileName().toString();
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }

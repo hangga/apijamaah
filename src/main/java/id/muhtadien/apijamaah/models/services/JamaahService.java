@@ -12,13 +12,15 @@ public interface JamaahService {
     JamaahEntity add(@RequestParam String nama,
                      @RequestParam String alamat,
                      @RequestParam String skill,
-                     @RequestParam String status);
+                     @RequestParam String status,
+                     @RequestParam String photoUrl);
 
     JamaahEntity update(@RequestParam int id,
                         @RequestParam String nama,
                         @RequestParam String alamat,
                         @RequestParam String skill,
-                        @RequestParam String status);
+                        @RequestParam String status,
+                        @RequestParam String photoUrl);
 
     List<JamaahEntity> getAll();
 
