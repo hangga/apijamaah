@@ -1,4 +1,4 @@
-package id.muhtadien.apijamaah.models;
+package id.muhtadien.apijamaah.models.services;
 
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExcelHelper {
+public class JamaahExcelHelper {
     public static final String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     //static String[] HEADERs = { "Id", "Title", "Description", "Published" };
     static final String SHEET = "Sheet1"; // <-- Sheet Name
@@ -47,33 +47,24 @@ public class ExcelHelper {
                 // Entitas/ tabel
                 JamaahEntity jamaahEntity = new JamaahEntity();
 
-                int cellIdx = 0;
+                int columnIndex = 0;
                 while (cellsInRow.hasNext()) {
-                    Cell currentCell = cellsInRow.next();
-                    switch (cellIdx) {
+                    Cell currentCellInRow = cellsInRow.next();
+                    switch (columnIndex) {
                         case 0:
-                            jamaahEntity.setNama(currentCell.getStringCellValue() == null? "-":currentCell.getStringCellValue());
+                            jamaahEntity.setNama(currentCellInRow.getStringCellValue());
                             break;
 
                         case 1:
-                            jamaahEntity.setSex(currentCell.getStringCellValue() == null? "-":currentCell.getStringCellValue());
+                            jamaahEntity.setSex(currentCellInRow.getStringCellValue());
                             break;
 
                         case 2:
-                            try{
-                                jamaahEntity.setAlamat(currentCell.getStringCellValue() == null? "-":currentCell.getStringCellValue());
-                            }catch (Exception e){
-                                jamaahEntity.setAlamat("");
-                            }
+                            jamaahEntity.setAlamat(currentCellInRow.getStringCellValue());
                             break;
 
                         case 4:
-                            try{
-                                jamaahEntity.setStatus(String.valueOf(currentCell.getNumericCellValue()));
-                            }catch (Exception e){
-                                jamaahEntity.setStatus("");
-                            }
-
+                            jamaahEntity.setStatus(String.valueOf(currentCellInRow.getNumericCellValue()));
                             break;
 
                         default:
@@ -82,7 +73,7 @@ public class ExcelHelper {
 
                     jamaahEntity.setSkill("");
 
-                    cellIdx++;
+                    columnIndex++;
                 }
 
                 JamaahEntitys.add(jamaahEntity);

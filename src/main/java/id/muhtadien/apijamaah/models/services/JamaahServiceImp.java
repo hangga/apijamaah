@@ -1,6 +1,5 @@
 package id.muhtadien.apijamaah.models.services;
 
-import id.muhtadien.apijamaah.models.ExcelHelper;
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
 import id.muhtadien.apijamaah.models.repositories.JamaahRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +68,7 @@ public class JamaahServiceImp implements JamaahService{
 
     @Override
     public void importExcel(MultipartFile file) throws IOException {
-        List<JamaahEntity> jamaahEntities = ExcelHelper.excelToJamaahEntitys(file.getInputStream());
+        List<JamaahEntity> jamaahEntities = JamaahExcelHelper.excelToJamaahEntitys(file.getInputStream());
         jamaahRepository.saveAll(jamaahEntities);
     }
 }

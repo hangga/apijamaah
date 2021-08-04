@@ -2,6 +2,7 @@ package id.muhtadien.apijamaah.controllers;
 
 import id.muhtadien.apijamaah.models.entities.JamaahEntity;
 import id.muhtadien.apijamaah.models.services.FilesStorageService;
+import id.muhtadien.apijamaah.models.services.JamaahExcelHelper;
 import id.muhtadien.apijamaah.models.services.JamaahService;
 import id.muhtadien.apijamaah.responses.CommonResponse;
 import id.muhtadien.apijamaah.responses.CommonResponseGenerator;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,33 @@ public class JamaahController {
 
     @Autowired
     JamaahService jamaahService;
+
+    @PostMapping(value = "upload")
+    public ResponseEntity<CommonResponse> uploadExcelFile(@RequestParam("file") MultipartFile file) {
+        String message;
+        // Upload and import Excel
+        if (JamaahExcelHelper.isExcelFormat(file)) {
+
+            try {
+                jamaahService.importExcel(file);
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(new CommonResponse(message, 200, null));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity
+                        .status(HttpStatus.EXPECTATION_FAILED)
+                        .body(new CommonResponse(e.getMessage(), 500, null));
+            }
+        }
+
+        message = "Please upload an excel file!";
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new CommonResponse(message, 400, null));
+
+    }
 
     @GetMapping(value = "getdata")
     public ResponseEntity<CommonResponse> getall(

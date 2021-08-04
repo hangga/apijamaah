@@ -13,11 +13,27 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.3'
+	// Spring boot web
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
-	implementation 'org.apache.poi:poi-ooxml:5.0.0'
-	implementation 'io.reactivex:rxjava-reactive-streams:1.2.1'
+
+	// JPA Hibernate
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.3'
+
+	// MySql Driver
 	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+
+	// Apache POI for Word, Excel document handler
+	implementation 'org.apache.poi:poi-ooxml:5.0.0'
+
+	// RxJava
+	implementation 'io.reactivex:rxjava-reactive-streams:1.2.1'
+
+	// Swagger 2 OpenApi
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
 }
 
