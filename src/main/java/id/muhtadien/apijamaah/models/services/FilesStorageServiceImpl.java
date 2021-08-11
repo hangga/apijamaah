@@ -42,7 +42,8 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             Files.copy(file.getInputStream(), destination);
             return newFileName;
         } catch (Exception e) {
-            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+            return "Upload Failed:"+e.getMessage();
+            //throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
 

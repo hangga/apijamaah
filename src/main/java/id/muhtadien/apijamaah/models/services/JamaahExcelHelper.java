@@ -16,7 +16,6 @@ import java.util.List;
 
 public class JamaahExcelHelper {
     public static final String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    //static String[] HEADERs = { "Id", "Title", "Description", "Published" };
     static final String SHEET = "Sheet1"; // <-- Sheet Name
 
     public static boolean isExcelFormat(MultipartFile file) {

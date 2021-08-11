@@ -127,8 +127,18 @@ public class JamaahController {
                                               @RequestParam String skill,
                                               @RequestParam String status,
                                               @RequestParam("file") MultipartFile file) {
+
         String photoUrl = storageService.save(file, nama);
+
+        if (photoUrl.contains("Upload Failed")){
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(commonResponseGenerator.failedResponse(photoUrl,
+                            HttpStatus.INTERNAL_SERVER_ERROR.value()));
+        }
+
         JamaahEntity jamaah = jamaahService.add(nama, alamat, skill, status, photoUrl);
+
         try {
             return ResponseEntity
                     .status(HttpStatus.OK)
