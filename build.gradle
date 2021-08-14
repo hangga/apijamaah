@@ -20,7 +20,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.3'
 
 	// MySql Driver
-	runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+	//runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+
+	// Postgre
+	runtimeOnly 'org.postgresql:postgresql'
 
 	// Apache POI for Word, Excel document handler
 	implementation 'org.apache.poi:poi-ooxml:5.0.0'
