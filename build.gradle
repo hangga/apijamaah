@@ -14,16 +14,17 @@ repositories {
 
 dependencies {
 	// Spring boot web
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
 
 	// JPA Hibernate
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.3'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.3'
 
 	// MySql Driver
-	//runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+	//runtimeOnly 'mysql:mysql-connector-java:8.0.28'
+	implementation 'mysql:mysql-connector-java:8.0.28'
 
 	// Postgre
-	runtimeOnly 'org.postgresql:postgresql'
+	//runtimeOnly 'org.postgresql:postgresql:42.3.1'
 
 	// Apache POI for Word, Excel document handler
 	implementation 'org.apache.poi:poi-ooxml:5.0.0'
@@ -37,7 +38,7 @@ dependencies {
 
 	//implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.3'
 }
 
 test {
